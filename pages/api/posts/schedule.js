@@ -13,7 +13,7 @@ export default async function handler(req, res) {
 
   try {
     // 포스트를 예약 상태로 업데이트
-    const updatedPost = updatePost(parseInt(postId), {
+    const updatedPost = await updatePost(parseInt(postId), {
       status: 'scheduled',
       scheduled_at: new Date(scheduledAt).toISOString()
     });

@@ -13,7 +13,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ success: false, message: '필수 항목이 누락되었습니다.' });
     }
 
-    updatePost(parseInt(id), {
+    await updatePost(parseInt(id), {
       title,
       content,
       meta_description,

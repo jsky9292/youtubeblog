@@ -36,7 +36,7 @@ export default function Home({ posts }) {
 
 export async function getStaticProps() {
   try {
-    const posts = getPublishedPosts(20, 0);
+    const posts = await getPublishedPosts(20, 0);
 
     return {
       props: {

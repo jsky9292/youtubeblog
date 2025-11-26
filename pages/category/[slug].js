@@ -116,7 +116,7 @@ export async function getServerSideProps({ params }) {
   }
 
   try {
-    const posts = getPublishedPostsByCategory(category.id, 50, 0);
+    const posts = await getPublishedPostsByCategory(category.id, 50, 0);
 
     return {
       props: {

@@ -116,7 +116,7 @@ export default async function handler(req, res) {
     });
 
     // DB에 저장
-    const savedPost = createPost(postData);
+    const savedPost = await createPost(postData);
 
     return res.status(200).json({
       success: true,

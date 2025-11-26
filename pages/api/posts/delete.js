@@ -18,7 +18,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const result = deletePost(slug);
+    const result = await deletePost(slug);
 
     if (result) {
       return res.status(200).json({

@@ -268,7 +268,7 @@ export default function Post({ post }) {
 
 export async function getStaticPaths() {
   try {
-    const slugs = getAllPublishedSlugs();
+    const slugs = await getAllPublishedSlugs();
 
     return {
       paths: slugs.map((slug) => ({
@@ -287,7 +287,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   try {
-    const post = getPostBySlug(params.slug);
+    const post = await getPostBySlug(params.slug);
 
     if (!post) {
       return {

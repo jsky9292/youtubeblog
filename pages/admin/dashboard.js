@@ -376,8 +376,8 @@ export default function Dashboard({ draftPosts: initialDrafts, publishedPosts: i
 export async function getServerSideProps() {
   try {
     const { validateApiKeys } = require('../../lib/config');
-    const draftPosts = getDraftPosts();
-    const publishedPosts = getPublishedPosts(10, 0);
+    const draftPosts = await getDraftPosts();
+    const publishedPosts = await getPublishedPosts(10, 0);
     const apiStatus = validateApiKeys();
 
     return {

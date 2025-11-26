@@ -13,7 +13,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ success: false, message: 'ID가 필요합니다.' });
     }
 
-    const post = getPost(parseInt(id));
+    const post = await getPost(parseInt(id));
 
     if (!post) {
       return res.status(404).json({ success: false, message: '포스트를 찾을 수 없습니다.' });

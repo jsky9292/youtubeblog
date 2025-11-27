@@ -6,7 +6,7 @@ import { getAllCategories } from '../../lib/categories';
 
 export default function PostEditor() {
   const router = useRouter();
-  const { id } = router.query;
+  const { id, slug } = router.query;
 
   const [post, setPost] = useState(null);
   const [title, setTitle] = useState('');
@@ -17,14 +17,15 @@ export default function PostEditor() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    if (id) {
+    if (id || slug) {
       loadPost();
     }
-  }, [id]);
+  }, [id, slug]);
 
   const loadPost = async () => {
     try {
-      const res = await fetch(`/api/posts/get?id=${id}`);
+      const query = id ? `id=${id}` : `slug=${slug}`;
+      const res = await fetch(`/api/posts/get?${query}`);
       const data = await res.json();
       if (data.success) {
         setPost(data.post);
@@ -47,7 +48,7 @@ export default function PostEditor() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          id: parseInt(id),
+          id: post.id,
           title,
           content,
           meta_description: metaDescription,

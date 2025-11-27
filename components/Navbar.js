@@ -1,5 +1,5 @@
 // components/Navbar.js
-// 보담 - 토스/뱅크샐러드 스타일 네비게이션
+// 토스 스타일 네비게이션
 
 import Link from 'next/link';
 import { useState } from 'react';
@@ -15,12 +15,12 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="bg-white sticky top-0 z-50 border-b border-gray-100">
-      <div className="max-w-5xl mx-auto px-4">
+    <nav className="bg-white sticky top-0 z-50 shadow-sm">
+      <div className="max-w-4xl mx-auto px-4">
         <div className="flex justify-between items-center h-14">
           {/* 로고 */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-blue-500 rounded-xl flex items-center justify-center">
               <span className="text-white font-bold text-sm">보</span>
             </div>
             <span className="text-lg font-bold text-gray-900">보담</span>
@@ -32,7 +32,7 @@ export default function Navbar() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
+                className="px-3 py-2 text-sm text-gray-600 hover:text-blue-500 rounded-lg transition-colors"
               >
                 {item.name}
               </Link>
@@ -43,12 +43,12 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-3">
             <Link
               href="/quiz"
-              className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+              className="text-sm text-gray-600 hover:text-blue-500 transition-colors"
             >
               자가진단
             </Link>
             <Link href="/contact">
-              <button className="px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors">
+              <button className="px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-xl hover:bg-blue-600 transition-colors">
                 무료상담
               </button>
             </Link>
@@ -56,7 +56,7 @@ export default function Navbar() {
 
           {/* 모바일 메뉴 버튼 */}
           <button
-            className="md:hidden p-2 -mr-2 rounded-lg hover:bg-gray-50 transition-colors"
+            className="md:hidden p-2 -mr-2 rounded-lg hover:bg-gray-100 transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="메뉴"
           >
@@ -78,7 +78,7 @@ export default function Navbar() {
 
       {/* 모바일 메뉴 */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100">
+        <div className="md:hidden bg-white border-t">
           <div className="px-4 py-3 space-y-1">
             {navItems.map((item) => (
               <Link
@@ -90,7 +90,7 @@ export default function Navbar() {
                 {item.name}
               </Link>
             ))}
-            <div className="pt-2 border-t border-gray-100 mt-2">
+            <div className="pt-2 border-t mt-2">
               <Link
                 href="/quiz"
                 className="block px-3 py-2.5 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
@@ -99,7 +99,7 @@ export default function Navbar() {
                 보험금 자가진단
               </Link>
               <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
-                <div className="mt-2 px-3 py-2.5 bg-gray-900 text-white text-center rounded-lg font-medium">
+                <div className="mt-2 px-3 py-2.5 bg-blue-500 text-white text-center rounded-xl font-medium">
                   무료 상담 신청
                 </div>
               </Link>

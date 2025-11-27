@@ -356,6 +356,11 @@ export default function Dashboard({ draftPosts: initialDrafts, publishedPosts: i
                             👁️ 보기
                           </button>
                         </Link>
+                        <Link href={`/admin/editor?slug=${post.slug}`}>
+                          <button className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors text-sm">
+                            ✏️ 수정
+                          </button>
+                        </Link>
                         <button
                           onClick={() => handleDelete(post.slug)}
                           className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors text-sm"

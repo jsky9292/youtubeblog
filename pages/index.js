@@ -21,14 +21,14 @@ export default function Home({ posts }) {
               손해사정사가 직접 알려드립니다
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Link href="/contact">
+              <Link href="/calculator">
                 <button className="w-full sm:w-auto px-6 py-3 bg-blue-500 text-white rounded-2xl font-medium hover:bg-blue-600 transition-colors shadow-lg shadow-blue-500/30">
-                  무료 상담 신청
+                  합의금 계산하기
                 </button>
               </Link>
-              <Link href="/quiz">
+              <Link href="/contact">
                 <button className="w-full sm:w-auto px-6 py-3 bg-white text-gray-700 rounded-2xl font-medium hover:bg-gray-50 transition-colors border">
-                  보험금 자가진단
+                  무료 상담 신청
                 </button>
               </Link>
             </div>

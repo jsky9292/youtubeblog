@@ -42,10 +42,10 @@ export default function Navbar() {
           {/* 상담 버튼 */}
           <div className="hidden md:flex items-center gap-3">
             <Link
-              href="/quiz"
+              href="/calculator"
               className="text-sm text-gray-600 hover:text-blue-500 transition-colors"
             >
-              자가진단
+              합의금계산
             </Link>
             <Link href="/contact">
               <button className="px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-xl hover:bg-blue-600 transition-colors">
@@ -92,11 +92,11 @@ export default function Navbar() {
             ))}
             <div className="pt-2 border-t mt-2">
               <Link
-                href="/quiz"
+                href="/calculator"
                 className="block px-3 py-2.5 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                보험금 자가진단
+                합의금 계산기
               </Link>
               <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
                 <div className="mt-2 px-3 py-2.5 bg-blue-500 text-white text-center rounded-xl font-medium">

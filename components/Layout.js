@@ -23,7 +23,7 @@ export default function Layout({
 
   const siteDescription = description || '손해사정사가 직접 알려주는 보험금 청구의 모든 것.';
   const siteKeywords = keywords || '보험금 청구, 손해사정사, 자동차보험, 실손보험';
-  const ogImageUrl = ogImage || `${siteUrl}/og-image.png`;
+  const ogImageUrl = ogImage || `${siteUrl}/api/og`;
 
   return (
     <>

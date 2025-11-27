@@ -128,12 +128,13 @@ export default function Dashboard({ draftPosts: initialDrafts, publishedPosts: i
               <h1 className="text-3xl font-bold text-gray-900">관리자 대시보드</h1>
               <p className="text-gray-600 mt-1">블로그 콘텐츠를 관리하세요</p>
             </div>
-            <Link href="/admin/settings">
-              <button className="inline-flex items-center px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white font-medium rounded-lg transition-colors">
-                <span className="mr-2">⚙️</span>
-                설정
-              </button>
-            </Link>
+            <div className="flex gap-3">
+              <Link href="/admin/settings">
+                <button className="inline-flex items-center px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white font-medium rounded-lg transition-colors">
+                  <span className="mr-2">⚙️</span>
+                  설정
+                </button>
+              </Link>
               <button
                 onClick={handleLogout}
                 className="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors"
@@ -141,6 +142,7 @@ export default function Dashboard({ draftPosts: initialDrafts, publishedPosts: i
                 🚪 로그아웃
               </button>
             </div>
+          </div>
 
           {/* API 상태 알림 */}
           {(!apiStatus.youtube || !apiStatus.gemini) && (

@@ -66,13 +66,12 @@ export default function Home({ posts }) {
       <section className="py-8">
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="text-lg font-bold text-gray-900 mb-4">어떤 보험이 궁금하세요?</h2>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {[
-              { name: '손해사정', desc: '손해사정사란?', href: '/adjuster', color: 'bg-indigo-50 text-indigo-600' },
+              { name: '분쟁사례', desc: '이렇게 해결했어요', href: '/cases', color: 'bg-red-50 text-red-600' },
               { name: '자동차보험', desc: '사고 합의금', href: '/category/auto', color: 'bg-blue-50 text-blue-600' },
               { name: '실손보험', desc: '의료비 청구', href: '/category/health', color: 'bg-green-50 text-green-600' },
               { name: '생명보험', desc: '진단비, 수술비', href: '/category/life', color: 'bg-purple-50 text-purple-600' },
-              { name: '실제 사례', desc: '청구 성공기', href: '/category/cases', color: 'bg-orange-50 text-orange-600' },
             ].map((cat) => (
               <Link key={cat.name} href={cat.href}>
                 <div className="bg-white rounded-2xl p-4 hover:shadow-md transition-all cursor-pointer border h-full">

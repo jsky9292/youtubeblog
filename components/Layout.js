@@ -86,6 +86,7 @@ export default function Layout({
               <div>
                 <h4 className="font-medium text-gray-900 mb-3 text-sm">보험 정보</h4>
                 <ul className="space-y-2">
+                  <li><Link href="/adjuster" className="text-sm text-gray-500 hover:text-blue-500">손해사정</Link></li>
                   <li><Link href="/category/auto" className="text-sm text-gray-500 hover:text-blue-500">자동차보험</Link></li>
                   <li><Link href="/category/health" className="text-sm text-gray-500 hover:text-blue-500">실손보험</Link></li>
                   <li><Link href="/category/life" className="text-sm text-gray-500 hover:text-blue-500">생명보험</Link></li>

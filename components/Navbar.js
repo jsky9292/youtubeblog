@@ -8,6 +8,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
+    { name: '손해사정', href: '/adjuster' },
     { name: '자동차보험', href: '/category/auto' },
     { name: '실손보험', href: '/category/health' },
     { name: '생명보험', href: '/category/life' },

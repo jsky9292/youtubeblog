@@ -29,3 +29,4 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
+// Trigger redeploy Thu, Nov 27, 2025  9:38:52 PM

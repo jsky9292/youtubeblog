@@ -17,7 +17,7 @@ export default async function handler(req, res) {
     console.log(`[Approve] 발행 요청 - postId: ${postId}, category: ${category}`);
 
     // 포스트를 발행 상태로 업데이트 (카테고리 포함)
-    const updatedPost = await updatePost(parseInt(postId), {
+    const updatedPost = await updatePost(postId, {
       status: 'published',
       published_at: new Date().toISOString(),
       category: category || 'life' // 기본값: 생활정보

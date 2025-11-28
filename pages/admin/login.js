@@ -12,14 +12,6 @@ export default function AdminLogin() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // 이미 로그인되어 있으면 대시보드로 이동
-  useEffect(() => {
-    const token = localStorage.getItem('adminToken');
-    if (token) {
-      router.push('/admin/dashboard');
-    }
-  }, [router]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');

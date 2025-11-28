@@ -2,8 +2,53 @@
 // Gemini Imagen API를 사용한 AI 썸네일 이미지 생성
 
 const axios = require('axios');
+const { createClient } = require('@supabase/supabase-js');
 const { getConfigValue } = require('../../lib/config');
-const { compressBase64Image } = require('../../lib/image-utils');
+const sharp = require('sharp');
+
+// Supabase 클라이언트 생성
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+/**
+ * 이미지를 Supabase Storage에 업로드하고 public URL 반환
+ */
+async function uploadToSupabaseStorage(base64Data, fileName) {
+  try {
+    const imageBuffer = Buffer.from(base64Data, 'base64');
+
+    // Sharp로 이미지 최적화
+    const optimizedBuffer = await sharp(imageBuffer)
+      .resize(1280, 720, { fit: 'cover' })
+      .jpeg({ quality: 80 })
+      .toBuffer();
+
+    // Supabase Storage에 업로드
+    const { data, error } = await supabase.storage
+      .from('thumbnails')
+      .upload(fileName, optimizedBuffer, {
+        contentType: 'image/jpeg',
+        upsert: true
+      });
+
+    if (error) {
+      console.error('[ERROR] Supabase Storage 업로드 실패:', error);
+      throw error;
+    }
+
+    // Public URL 생성
+    const { data: urlData } = supabase.storage
+      .from('thumbnails')
+      .getPublicUrl(fileName);
+
+    console.log('[INFO] Supabase Storage 업로드 성공:', urlData.publicUrl);
+    return urlData.publicUrl;
+  } catch (error) {
+    console.error('[ERROR] 이미지 업로드 실패:', error.message);
+    throw error;
+  }
+}
 
 /**
  * Gemini 2.0 Flash로 AI 이미지 생성 (generateContent + responseModalities)
@@ -50,7 +95,10 @@ async function generateImageWithGemini(postTitle, thumbnailPrompt) {
             if (part.inlineData?.mimeType?.startsWith('image/')) {
               const base64Image = part.inlineData.data;
               console.log(`[INFO] ${model} 이미지 생성 성공`);
-              return await compressBase64Image(base64Image, part.inlineData.mimeType);
+
+              // Supabase Storage에 업로드
+              const fileName = `thumbnail-${Date.now()}-${Math.random().toString(36).substring(7)}.jpg`;
+              return await uploadToSupabaseStorage(base64Image, fileName);
             }
           }
         }

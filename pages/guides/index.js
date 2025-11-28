@@ -6,6 +6,16 @@ import Link from 'next/link';
 
 const guides = [
   {
+    slug: 'car-accident',
+    title: '교통사고 합의금 완벽 가이드',
+    description: '합의금 계산법부터 협상 전략까지. 보험사에게 제대로 된 보상을 받는 방법을 알려드립니다.',
+    category: '자동차보험',
+    categoryColor: 'bg-blue-100 text-blue-700',
+    icon: '🚗',
+    readTime: '15분',
+    keywords: ['교통사고 합의금', '합의금 계산', '위자료'],
+  },
+  {
     slug: 'silson-insurance',
     title: '실손보험 청구 완벽 가이드',
     description: '실손보험 청구 방법부터 필요 서류, 실손24 앱 사용법까지. 병원비 환급받는 모든 방법을 알려드립니다.',
@@ -14,6 +24,16 @@ const guides = [
     icon: '🏥',
     readTime: '15분',
     keywords: ['실손보험 청구', '실손24', '의료비 환급'],
+  },
+  {
+    slug: 'cancer-insurance',
+    title: '암 진단비 청구 완벽 가이드',
+    description: '암 진단 후 받을 수 있는 모든 보험금과 청구 방법. 일반암, 유사암, 소액암 분류까지 총정리.',
+    category: '생명보험',
+    categoryColor: 'bg-purple-100 text-purple-700',
+    icon: '💜',
+    readTime: '12분',
+    keywords: ['암 진단비', '암보험 청구', '유사암'],
   },
   {
     slug: 'claim-rejection',
@@ -29,22 +49,22 @@ const guides = [
 
 const upcomingGuides = [
   {
-    title: '교통사고 합의금 협상 가이드',
-    description: '합의금을 높이는 협상 전략과 주의사항',
-    category: '자동차보험',
-    categoryColor: 'bg-blue-100 text-blue-700',
-  },
-  {
-    title: '암 진단비 청구 가이드',
-    description: '암 진단시 받을 수 있는 보험금 총정리',
-    category: '생명보험',
-    categoryColor: 'bg-purple-100 text-purple-700',
-  },
-  {
     title: '후유장해 보험금 가이드',
     description: '후유장해 등급 판정과 보험금 청구 방법',
     category: '상해보험',
     categoryColor: 'bg-orange-100 text-orange-700',
+  },
+  {
+    title: '산재보험 청구 가이드',
+    description: '업무 중 사고시 산재보험 청구 방법',
+    category: '산재보험',
+    categoryColor: 'bg-teal-100 text-teal-700',
+  },
+  {
+    title: '사망보험금 청구 가이드',
+    description: '유가족을 위한 사망보험금 청구 안내',
+    category: '생명보험',
+    categoryColor: 'bg-gray-100 text-gray-700',
   },
 ];
 

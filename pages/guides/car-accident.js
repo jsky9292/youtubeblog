@@ -405,23 +405,23 @@ export default function CarAccidentGuide() {
 
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
-                  <span className="text-blue-500 mt-1">></span>
+                  <span className="text-blue-500 mt-1">&gt;</span>
                   <span>보험사가 제시한 합의금이 너무 적다고 느껴질 때</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-blue-500 mt-1">></span>
+                  <span className="text-blue-500 mt-1">&gt;</span>
                   <span>과실비율에 대한 분쟁이 있을 때</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-blue-500 mt-1">></span>
+                  <span className="text-blue-500 mt-1">&gt;</span>
                   <span>후유장해가 남았을 때</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-blue-500 mt-1">></span>
+                  <span className="text-blue-500 mt-1">&gt;</span>
                   <span>보험사가 보상을 거부할 때</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-blue-500 mt-1">></span>
+                  <span className="text-blue-500 mt-1">&gt;</span>
                   <span>여러 보험이 얽혀 복잡할 때</span>
                 </div>
               </div>

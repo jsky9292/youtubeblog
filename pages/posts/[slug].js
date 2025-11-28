@@ -114,7 +114,7 @@ export default function Post({ post }) {
     }
   );
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://youtubeblog-drab.vercel.app';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://youtubeblog-rho.vercel.app';
   const postUrl = `${siteUrl}/posts/${post.slug}`;
 
   return (

@@ -18,7 +18,7 @@ export default function Layout({
 }) {
   const siteTitle = '보담';
   const siteName = '보담 - 손해사정사의 보험 이야기';
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://youtubeblog-drab.vercel.app';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://youtubeblog-rho.vercel.app';
   const fullTitle = title ? `${title} | ${siteTitle}` : siteName;
 
   const siteDescription = description || '손해사정사가 직접 알려주는 보험금 청구의 모든 것.';

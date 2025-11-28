@@ -14,10 +14,12 @@ export default async function handler(req, res) {
   }
 
   try {
+    // 필요한 필드만 선택하여 타임아웃 방지
     const { data, error } = await supabase
       .from('posts')
-      .select('*')
-      .order('created_at', { ascending: false });
+      .select('id, title, slug, meta_description, thumbnail_url, category, status, view_count, published_at, created_at')
+      .order('created_at', { ascending: false })
+      .limit(100);
 
     if (error) throw error;
 
@@ -27,6 +29,10 @@ export default async function handler(req, res) {
     });
   } catch (error) {
     console.error('포스트 조회 오류:', error);
-    return res.status(500).json({ error: error.message });
+    return res.status(500).json({
+      success: false,
+      error: error.message,
+      posts: []
+    });
   }
 }

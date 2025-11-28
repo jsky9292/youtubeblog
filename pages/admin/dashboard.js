@@ -142,31 +142,23 @@ export default function Dashboard({ draftPosts: initialDrafts, publishedPosts: i
           )}
 
           {/* 통계 카드 */}
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
             <Link href="/admin/consultations">
               <div className="bg-blue-50 rounded-xl p-5 border border-blue-100 hover:border-blue-200 hover:shadow-sm transition-all cursor-pointer">
                 <div className="text-sm text-blue-600 mb-1">문의 관리</div>
                 <div className="text-2xl font-bold text-blue-700">📋 보기</div>
               </div>
             </Link>
-            <Link href="/admin/discover">
-              <div className="bg-white rounded-xl p-5 border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all cursor-pointer">
-                <div className="text-sm text-gray-500 mb-1">영상 검색</div>
-                <div className="text-2xl font-bold text-gray-900">검색</div>
+            <Link href="/admin/posts">
+              <div className="bg-green-50 rounded-xl p-5 border border-green-100 hover:border-green-200 hover:shadow-sm transition-all cursor-pointer">
+                <div className="text-sm text-green-600 mb-1">포스트 관리</div>
+                <div className="text-2xl font-bold text-green-700">📝 {publishedPosts.length}개</div>
               </div>
             </Link>
-            <div className="bg-white rounded-xl p-5 border border-gray-100">
-              <div className="text-sm text-gray-500 mb-1">검토 대기</div>
-              <div className="text-2xl font-bold text-gray-900">{draftPosts.length}</div>
-            </div>
-            <div className="bg-white rounded-xl p-5 border border-gray-100">
-              <div className="text-sm text-gray-500 mb-1">발행 완료</div>
-              <div className="text-2xl font-bold text-gray-900">{publishedPosts.length}</div>
-            </div>
             <Link href="/">
               <div className="bg-white rounded-xl p-5 border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all cursor-pointer">
                 <div className="text-sm text-gray-500 mb-1">블로그</div>
-                <div className="text-2xl font-bold text-gray-900">보기</div>
+                <div className="text-2xl font-bold text-gray-900">보기 →</div>
               </div>
             </Link>
           </div>

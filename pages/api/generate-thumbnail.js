@@ -63,8 +63,8 @@ async function generateImageWithGemini(postTitle, thumbnailPrompt) {
 
     console.log('[INFO] 이미지 생성 프롬프트:', imagePrompt);
 
-    // Gemini 이미지 생성 모델 시도 (2.5 > 2.0 순서)
-    const models = ['gemini-2.5-flash-image', 'gemini-2.0-flash-exp-image-generation'];
+    // Gemini 이미지 생성 모델 시도
+    const models = ['gemini-2.5-flash-lite'];
     let response;
     let lastError;
 

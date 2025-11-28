@@ -2,19 +2,13 @@
 // Gemini Imagen API를 사용한 AI 썸네일 이미지 생성
 
 const axios = require('axios');
-const { createClient } = require('@supabase/supabase-js');
 const { getConfigValue } = require('../../lib/config');
 const sharp = require('sharp');
 
-// Supabase 클라이언트 생성
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
 /**
- * 이미지를 Supabase Storage에 업로드하고 public URL 반환
+ * imgbb에 이미지 업로드하고 URL 반환 (무료)
  */
-async function uploadToSupabaseStorage(base64Data, fileName) {
+async function uploadToImgbb(base64Data) {
   try {
     const imageBuffer = Buffer.from(base64Data, 'base64');
 
@@ -24,28 +18,26 @@ async function uploadToSupabaseStorage(base64Data, fileName) {
       .jpeg({ quality: 80 })
       .toBuffer();
 
-    // Supabase Storage에 업로드
-    const { data, error } = await supabase.storage
-      .from('thumbnails')
-      .upload(fileName, optimizedBuffer, {
-        contentType: 'image/jpeg',
-        upsert: true
-      });
+    const optimizedBase64 = optimizedBuffer.toString('base64');
 
-    if (error) {
-      console.error('[ERROR] Supabase Storage 업로드 실패:', error);
-      throw error;
+    // imgbb API로 업로드 (무료 API 키 사용)
+    const formData = new URLSearchParams();
+    formData.append('image', optimizedBase64);
+
+    const response = await axios.post(
+      'https://api.imgbb.com/1/upload?key=d36eb6591370ae7f9089d85875e56b22',
+      formData,
+      { timeout: 30000 }
+    );
+
+    if (response.data?.data?.url) {
+      console.log('[INFO] imgbb 업로드 성공:', response.data.data.url);
+      return response.data.data.url;
     }
 
-    // Public URL 생성
-    const { data: urlData } = supabase.storage
-      .from('thumbnails')
-      .getPublicUrl(fileName);
-
-    console.log('[INFO] Supabase Storage 업로드 성공:', urlData.publicUrl);
-    return urlData.publicUrl;
+    throw new Error('imgbb 응답 오류');
   } catch (error) {
-    console.error('[ERROR] 이미지 업로드 실패:', error.message);
+    console.error('[ERROR] imgbb 업로드 실패:', error.message);
     throw error;
   }
 }
@@ -96,9 +88,8 @@ async function generateImageWithGemini(postTitle, thumbnailPrompt) {
               const base64Image = part.inlineData.data;
               console.log(`[INFO] ${model} 이미지 생성 성공`);
 
-              // Supabase Storage에 업로드
-              const fileName = `thumbnail-${Date.now()}-${Math.random().toString(36).substring(7)}.jpg`;
-              return await uploadToSupabaseStorage(base64Image, fileName);
+              // imgbb에 업로드
+              return await uploadToImgbb(base64Image);
             }
           }
         }

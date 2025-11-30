@@ -41,16 +41,48 @@ export default function PostEditor() {
     }
   };
 
+  // base64 이미지를 URL로 변환
+  const convertBase64ToUrl = async (contentHtml) => {
+    const base64Regex = /<img[^>]+src="(data:image\/[^;]+;base64,[^"]+)"[^>]*>/g;
+    const matches = [...contentHtml.matchAll(base64Regex)];
+
+    if (matches.length === 0) return contentHtml;
+
+    let newContent = contentHtml;
+
+    for (const match of matches) {
+      try {
+        const base64Data = match[1];
+        const res = await fetch('/api/upload-base64', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ base64Data })
+        });
+        const data = await res.json();
+        if (data.success && data.url) {
+          newContent = newContent.replace(base64Data, data.url);
+        }
+      } catch (err) {
+        console.error('base64 변환 실패:', err);
+      }
+    }
+
+    return newContent;
+  };
+
   const savePost = async () => {
     setSaving(true);
     try {
+      // base64 이미지가 있으면 먼저 URL로 변환
+      const processedContent = await convertBase64ToUrl(content);
+
       const res = await fetch('/api/posts/update', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           id: post.id,
           title,
-          content,
+          content: processedContent,
           meta_description: metaDescription,
           category,
           thumbnail_url: thumbnailUrl

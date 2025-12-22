@@ -183,15 +183,35 @@ export default function Discover() {
     setError('');
 
     try {
+      // AbortController로 긴 타임아웃 설정 (5분)
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 300000);
+
       const response = await fetch('/api/generate-post', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ videoId }),
+        signal: controller.signal
       });
 
-      const data = await response.json();
+      clearTimeout(timeoutId);
+
+      // 응답 텍스트를 먼저 확인
+      const responseText = await response.text();
+
+      // JSON 파싱 시도
+      let data;
+      try {
+        data = JSON.parse(responseText);
+      } catch (parseError) {
+        console.error('JSON 파싱 실패:', responseText.substring(0, 200));
+        // 타임아웃이나 서버 에러지만 글은 생성되었을 수 있음
+        alert('⚠️ 응답 처리 중 문제가 발생했지만, 글이 생성되었을 수 있습니다.\n\n대시보드에서 확인해주세요.');
+        window.location.href = '/admin/dashboard';
+        return;
+      }
 
       if (data.success) {
         alert(`✅ 블로그 글 생성 완료!\n\n제목: ${data.post.title}\n\n관리자 대시보드에서 확인하고 검토하세요.`);
@@ -200,7 +220,13 @@ export default function Discover() {
         setError(data.error || '글 생성 중 오류가 발생했습니다');
       }
     } catch (error) {
-      setError('오류 발생: ' + error.message);
+      // 타임아웃이나 네트워크 에러 시에도 글은 생성되었을 수 있음
+      if (error.name === 'AbortError') {
+        alert('⚠️ 요청 시간이 초과되었지만, 글이 생성되었을 수 있습니다.\n\n대시보드에서 확인해주세요.');
+      } else {
+        alert('⚠️ 오류가 발생했지만, 글이 생성되었을 수 있습니다.\n\n대시보드에서 확인해주세요.\n\n오류: ' + error.message);
+      }
+      window.location.href = '/admin/dashboard';
     } finally {
       setLoading(false);
     }

@@ -21,8 +21,8 @@ export default async function handler(req, res) {
   }
 
   // 환경변수에서 관리자 계정 확인
-  const adminUsername = process.env.ADMIN_USERNAME || 'admin';
-  const adminPassword = process.env.ADMIN_PASSWORD || 'admin1234';
+  const adminUsername = process.env.ADMIN_USERNAME || 'bidbuy';
+  const adminPassword = process.env.ADMIN_PASSWORD || 'bidbuy2024!';
 
   if (username === adminUsername && password === adminPassword) {
     // JWT 토큰 생성 (24시간 유효)

@@ -301,7 +301,12 @@ export default async function handler(req, res) {
 
     // 4. 이미지 생성 (썸네일 + 본문 이미지)
     console.log('[INFO] 이미지 생성 중...');
-    const baseUrl = req.headers.origin || 'http://localhost:3000';
+
+    // 환경에 따른 baseUrl 설정 (Vercel, 로컬 등)
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const host = req.headers['x-forwarded-host'] || req.headers.host || 'localhost:3000';
+    const baseUrl = req.headers.origin || `${protocol}://${host}`;
+    console.log('[INFO] 이미지 API baseUrl:', baseUrl);
 
     // 썸네일 생성
     let thumbnailUrl = null;
@@ -311,7 +316,8 @@ export default async function handler(req, res) {
         {
           postTitle: blogContent.title,
           thumbnailPrompt: blogContent.thumbnail_prompt || thumbnailPrompt || null
-        }
+        },
+        { timeout: 60000 }
       );
       if (thumbnailResponse.data.success) {
         thumbnailUrl = thumbnailResponse.data.imageUrl;
@@ -342,7 +348,8 @@ export default async function handler(req, res) {
           {
             postTitle: blogContent.title,
             thumbnailPrompt: imgPrompt
-          }
+          },
+          { timeout: 60000 }
         );
         if (imgResponse.data.success && imgResponse.data.imageUrl) {
           const imgTag = `<div style="margin: 20px 0; text-align: center;"><img src="${imgResponse.data.imageUrl}" alt="본문 이미지 ${i + 1}" style="max-width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" /></div>`;

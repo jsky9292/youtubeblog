@@ -59,3 +59,28 @@
 .blog-content a {
   @apply text-primary-600 hover:underline;
 }
+
+/* 표 스타일 - 텍스트 가독성 보장 */
+.blog-content table {
+  @apply my-6 w-full;
+  border-collapse: collapse;
+}
+
+.blog-content th,
+.blog-content td {
+  @apply px-4 py-3 border border-gray-200;
+  color: #333 !important;
+}
+
+.blog-content th {
+  @apply bg-gray-100 font-semibold;
+  color: #1f2937 !important;
+}
+
+.blog-content td {
+  background-color: white !important;
+}
+
+.blog-content tr:nth-child(even) td {
+  background-color: #f9fafb !important;
+}

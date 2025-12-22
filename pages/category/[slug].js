@@ -54,28 +54,33 @@ export default function CategoryPage({ posts, category, allCategories }) {
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {posts.map((post) => (
               <Link key={post.id} href={`/posts/${post.slug}`}>
-                <article className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow cursor-pointer group">
+                <article className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow cursor-pointer group border border-gray-100">
                   {/* 썸네일 */}
-                  <div className="aspect-video bg-gradient-to-br from-purple-100 to-blue-100 relative overflow-hidden">
+                  <div className="aspect-video bg-gradient-to-br from-blue-50 to-blue-100 relative overflow-hidden">
                     {post.thumbnail_url ? (
                       <img
                         src={post.thumbnail_url}
                         alt={post.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.nextSibling.style.display = 'flex';
+                        }}
                       />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <span className="text-6xl opacity-50">{category.icon}</span>
+                    ) : null}
+                    <div className={`w-full h-full flex items-center justify-center absolute inset-0 ${post.thumbnail_url ? 'hidden' : ''}`}>
+                      <div className="w-16 h-16 bg-blue-500 rounded-2xl flex items-center justify-center">
+                        <span className="text-white font-bold text-2xl">보</span>
                       </div>
-                    )}
+                    </div>
                   </div>
 
                   {/* 콘텐츠 */}
                   <div className="p-5">
-                    <h2 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-purple-600 transition-colors">
+                    <h2 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
                       {post.title}
                     </h2>
                     <p className="text-gray-600 text-sm line-clamp-2 mb-4">

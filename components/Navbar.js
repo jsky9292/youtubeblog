@@ -21,10 +21,8 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-14">
           {/* 로고 */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-blue-500 rounded-xl flex items-center justify-center">
-              <span className="text-white font-bold text-sm">보</span>
-            </div>
-            <span className="text-lg font-bold text-gray-900">보담</span>
+            <img src="/logo.png" alt="보험을 담다" className="h-8 w-auto" />
+            <span className="text-lg font-bold text-gray-900">보험을 담다</span>
           </Link>
 
           {/* 데스크톱 메뉴 */}

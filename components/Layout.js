@@ -16,14 +16,14 @@ export default function Layout({
   modifiedTime,
   author = '보담'
 }) {
-  const siteTitle = '보담';
-  const siteName = '보담 - 손해사정사의 보험 이야기';
+  const siteTitle = '보험을 담다';
+  const siteName = '보험을 담다 - 손해사정사의 보험 이야기';
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://youtubeblog-rho.vercel.app';
   const fullTitle = title ? `${title} | ${siteTitle}` : siteName;
 
   const siteDescription = description || '손해사정사가 직접 알려주는 보험금 청구의 모든 것.';
   const siteKeywords = keywords || '보험금 청구, 손해사정사, 자동차보험, 실손보험';
-  const ogImageUrl = ogImage || `${siteUrl}/api/og`;
+  const ogImageUrl = ogImage || `${siteUrl}/og-image.png`;
 
   return (
     <>
@@ -71,10 +71,8 @@ export default function Layout({
               {/* 브랜드 */}
               <div className="col-span-2 md:col-span-1">
                 <div className="flex items-center gap-2 mb-3">
-                  <div className="w-7 h-7 bg-blue-500 rounded-lg flex items-center justify-center">
-                    <span className="text-white font-bold text-xs">보</span>
-                  </div>
-                  <span className="font-bold text-gray-900">보담</span>
+                  <img src="/logo.png" alt="보험을 담다" className="h-7 w-auto" />
+                  <span className="font-bold text-gray-900">보험을 담다</span>
                 </div>
                 <p className="text-sm text-gray-500">
                   손해사정사가 직접 알려주는<br />
@@ -116,7 +114,7 @@ export default function Layout({
 
             <div className="pt-6 border-t text-center">
               <p className="text-xs text-gray-400">
-                © {new Date().getFullYear()} 보담. 본 사이트의 정보는 참고용입니다.
+                © {new Date().getFullYear()} 보험을 담다. 본 사이트의 정보는 참고용입니다.
               </p>
             </div>
           </div>

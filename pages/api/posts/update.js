@@ -1,6 +1,15 @@
 // pages/api/posts/update.js
 import { updatePost } from '../../../lib/db';
 
+// API 요청 본문 크기 제한 증가 (10MB)
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '10mb',
+    },
+  },
+};
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });

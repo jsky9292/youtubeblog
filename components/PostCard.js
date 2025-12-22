@@ -14,15 +14,24 @@ export default function PostCard({ post }) {
     <Link href={`/posts/${post.slug}`} className="block group">
       <article className="bg-white rounded-2xl overflow-hidden border hover:shadow-lg transition-all h-full">
         {/* 썸네일 */}
-        {post.thumbnail_url && (
-          <div className="aspect-[16/9] overflow-hidden bg-gray-100">
+        <div className="aspect-[16/9] overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100 relative">
+          {post.thumbnail_url ? (
             <img
               src={post.thumbnail_url}
               alt={post.title}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              onError={(e) => {
+                e.target.style.display = 'none';
+              }}
             />
-          </div>
-        )}
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              <div className="w-16 h-16 bg-blue-500 rounded-2xl flex items-center justify-center">
+                <span className="text-white font-bold text-2xl">보</span>
+              </div>
+            </div>
+          )}
+        </div>
 
         {/* 컨텐츠 */}
         <div className="p-4">

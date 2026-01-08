@@ -19,6 +19,17 @@ export default function Discover() {
   const [error, setError] = useState('');
   const [searchHistory, setSearchHistory] = useState([]);
 
+  // 카테고리 선택 상태
+  const [selectedCategory, setSelectedCategory] = useState('auto');
+  const categories = [
+    { value: 'auto', label: '🚗 자동차보험' },
+    { value: 'life', label: '💚 생명보험' },
+    { value: 'health', label: '🏥 실손보험' },
+    { value: 'claim', label: '📋 보험청구' },
+    { value: 'case', label: '⚖️ 분쟁사례' },
+    { value: 'guide', label: '📖 보험가이드' },
+  ];
+
   // 최근 검색 기록 로드
   useEffect(() => {
     const history = JSON.parse(localStorage.getItem('searchHistory') || '[]');
@@ -32,16 +43,33 @@ export default function Discover() {
     setSearchHistory(newHistory.slice(0, 5));
   };
 
-  // YouTube URL에서 video ID 추출
+  // YouTube URL에서 video ID 추출 (Shorts, 일반, 모바일 등 모든 형식 지원)
   const extractVideoId = (url) => {
+    const cleanUrl = url.trim();
+
+    // 이미 video ID만 입력한 경우 (11자리)
+    if (/^[a-zA-Z0-9_-]{11}$/.test(cleanUrl)) {
+      return cleanUrl;
+    }
+
     const patterns = [
-      /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/,
-      /youtube\.com\/embed\/([^&\n?#]+)/,
-      /youtube\.com\/v\/([^&\n?#]+)/,
+      // Shorts URL - https://www.youtube.com/shorts/VIDEO_ID
+      /youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/,
+      // 일반 watch URL
+      /youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})/,
+      /youtube\.com\/watch\?.*v=([a-zA-Z0-9_-]{11})/,
+      // 짧은 URL
+      /youtu\.be\/([a-zA-Z0-9_-]{11})/,
+      // embed/v/live URL
+      /youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/,
+      /youtube\.com\/v\/([a-zA-Z0-9_-]{11})/,
+      /youtube\.com\/live\/([a-zA-Z0-9_-]{11})/,
+      // 모바일 URL
+      /m\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})/,
     ];
 
     for (const pattern of patterns) {
-      const match = url.match(pattern);
+      const match = cleanUrl.match(pattern);
       if (match && match[1]) {
         return match[1];
       }
@@ -171,11 +199,12 @@ export default function Discover() {
     const videoId = extractVideoId(youtubeUrl);
 
     if (!videoId) {
-      setError('올바른 YouTube URL을 입력해주세요. (예: https://youtube.com/watch?v=VIDEO_ID)');
+      setError('올바른 YouTube URL을 입력해주세요. (예: https://youtube.com/watch?v=VIDEO_ID 또는 영상 ID)');
       return;
     }
 
-    if (!confirm(`이 영상으로 블로그 글을 생성하시겠습니까?\n\n영상 ID: ${videoId}`)) {
+    const categoryLabel = categories.find(c => c.value === selectedCategory)?.label || selectedCategory;
+    if (!confirm(`이 영상으로 블로그 글을 생성하시겠습니까?\n\n영상 ID: ${videoId}\n카테고리: ${categoryLabel}`)) {
       return;
     }
 
@@ -192,7 +221,7 @@ export default function Discover() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ videoId }),
+        body: JSON.stringify({ videoId, category: selectedCategory }),
         signal: controller.signal
       });
 
@@ -514,21 +543,46 @@ export default function Discover() {
 
               {/* YouTube URL 직접 입력 모드 */}
               {searchMode === 'youtube' && (
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    YouTube URL 입력 <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    value={youtubeUrl}
-                    onChange={(e) => setYoutubeUrl(e.target.value)}
-                    placeholder="예: https://www.youtube.com/watch?v=VIDEO_ID"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent text-lg"
-                    required
-                  />
-                  <p className="text-xs text-gray-500 mt-2">
-                    💡 YouTube 영상 URL을 입력하면 바로 블로그 글이 생성됩니다
-                  </p>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      YouTube URL 입력 <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={youtubeUrl}
+                      onChange={(e) => setYoutubeUrl(e.target.value)}
+                      placeholder="예: https://www.youtube.com/watch?v=VIDEO_ID 또는 Shorts URL"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent text-lg"
+                      required
+                    />
+                    <p className="text-xs text-gray-500 mt-2">
+                      💡 일반 영상, Shorts, 모바일 URL 모두 지원됩니다
+                    </p>
+                  </div>
+
+                  {/* 카테고리 선택 */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      📂 카테고리 선택
+                    </label>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                      {categories.map((cat) => (
+                        <button
+                          key={cat.value}
+                          type="button"
+                          onClick={() => setSelectedCategory(cat.value)}
+                          className={`px-4 py-3 rounded-lg font-medium text-sm transition-all ${
+                            selectedCategory === cat.value
+                              ? 'bg-red-600 text-white shadow-md ring-2 ring-red-300'
+                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                          }`}
+                        >
+                          {cat.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               )}
 

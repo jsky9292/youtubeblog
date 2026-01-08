@@ -10,9 +10,9 @@ export default function Discover() {
   const [keyword, setKeyword] = useState('');
   const [youtubeUrl, setYoutubeUrl] = useState('');
   const [webUrl, setWebUrl] = useState('');
-  const [minViews, setMinViews] = useState(10000);
+  const [minViews, setMinViews] = useState(0);
   const [maxResults, setMaxResults] = useState(20);
-  const [periodDays, setPeriodDays] = useState(30);
+  const [periodDays, setPeriodDays] = useState(0); // 0 = 전체 기간
   const [videoDuration, setVideoDuration] = useState('any'); // 'short', 'long', 'any'
   const [loading, setLoading] = useState(false);
   const [videos, setVideos] = useState([]);
@@ -613,12 +613,15 @@ export default function Discover() {
                         onChange={(e) => setPeriodDays(parseInt(e.target.value))}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       >
+                        <option value="0">전체 기간 (추천)</option>
                         <option value="7">최근 7일</option>
                         <option value="30">최근 30일</option>
                         <option value="90">최근 90일</option>
+                        <option value="365">최근 1년</option>
+                        <option value="1825">최근 5년</option>
                       </select>
                       <p className="text-xs text-gray-500 mt-1">
-                        최근 영상일수록 트렌드에 적합합니다
+                        정확한 매칭을 위해 '전체 기간' 추천
                       </p>
                     </div>
 

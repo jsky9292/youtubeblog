@@ -19,15 +19,15 @@ export default function Discover() {
   const [error, setError] = useState('');
   const [searchHistory, setSearchHistory] = useState([]);
 
-  // 카테고리 선택 상태
-  const [selectedCategory, setSelectedCategory] = useState('auto');
+  // 카테고리 선택 상태 (손해사정사 업무 기준)
+  const [selectedCategory, setSelectedCategory] = useState('traffic');
   const categories = [
-    { value: 'auto', label: '🚗 자동차보험' },
-    { value: 'life', label: '💚 생명보험' },
-    { value: 'health', label: '🏥 실손보험' },
-    { value: 'claim', label: '📋 보험청구' },
-    { value: 'case', label: '⚖️ 분쟁사례' },
-    { value: 'guide', label: '📖 보험가이드' },
+    { value: 'traffic', label: '🚗 교통사고' },
+    { value: 'industrial', label: '🏭 산재/근재' },
+    { value: 'dispute', label: '⚖️ 보험분쟁' },
+    { value: 'liability', label: '🤝 배상책임' },
+    { value: 'medical', label: '🏥 질병/상해' },
+    { value: 'guide', label: '📖 손해사정 가이드' },
   ];
 
   // 최근 검색 기록 로드

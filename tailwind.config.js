@@ -4,16 +4,26 @@ module.exports = {
     './pages/**/*.{js,jsx}',
     './components/**/*.{js,jsx}',
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        primary: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-        },
+        primary: '#135bec',
+        'primary-dark': '#0d4abf',
+        'primary-light': '#3d7ef0',
+        'background-light': '#f6f6f8',
+        'background-dark': '#101622',
+      },
+      fontFamily: {
+        display: ['Public Sans', 'Noto Sans KR', 'sans-serif'],
+        body: ['Public Sans', 'Noto Sans KR', 'sans-serif'],
+      },
+      borderRadius: {
+        DEFAULT: '0.25rem',
+        lg: '0.5rem',
+        xl: '0.75rem',
+        '2xl': '1rem',
+        full: '9999px',
       },
     },
   },
